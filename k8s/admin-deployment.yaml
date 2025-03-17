@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminapi
+  labels:
+    app: adminapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adminapi
+  template:
+    metadata:
+      labels:
+        app: adminapi
+    spec:
+      containers:
+      - name: adminapi
+        image: kiroto/adminapi:latest  # Docker image
+        ports:
+        - containerPort: 443
+        volumeMounts:
+        - name: ssl-certificates
+          mountPath: /app/certs  # Certs mount inside the container
+          readOnly: true
+        env:
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-uri
+      volumes:
+      - name: ssl-certificates
+        secret:
+          secretName: ssl-certificates

@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  adminapi:
+    build: ./adminapi
+    ports:
+      - "443:443"
+    volumes:
+      - ./certs:/app/certs
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/mydatabase
+    image: kiroto/adminapi:latest
+    depends_on:
+      - mongo
+
+  clientapi:
+    build: ./clientapi
+    ports:
+      - "5001:443"
+    volumes:
+      - ./certs:/app/certs
+    environment:
+      - ADMIN_API_URL=https://adminapi:443
+      - NODE_TLS_REJECT_UNAUTHORIZED=0 # NOT PRODUCTION SAFE. ENABLES SELF-SIGNED CERTIFICATES
+    image: kiroto/clientapi:latest
+    depends_on:
+      - adminapi
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
