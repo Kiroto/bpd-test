@@ -43,7 +43,15 @@ For the kubernetes pods, you will need to have configured the following secrets:
     * `server.crt`: The certificate.
     * `server.key`: The certificate key.
 
+### Testing
+
+To test locally, forward the required pods' ports.
+To test the admin api, use `kubectl port-forward service/adminapi-service 5000:5000` (this will expose adminapi to port 5000)
+To test the client api, use `kubectl port-forward <client_pod_name> 5001:5001` (this will expose clientapi to port 5001)
+
+
 ### Troubleshooting
 
 If the docker service isn't on by default on your computer, remember to run it.
 If you're using minikube, remember to start it with `minikube start`.
+
