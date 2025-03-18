@@ -46,8 +46,8 @@ For the kubernetes pods, you will need to have configured the following secrets:
 ### Testing
 
 To test locally, forward the required pods' ports.
-To test the admin api, use `kubectl port-forward service/adminapi-service 5000:5000` (this will expose adminapi to port 5000)
-To test the client api, use `kubectl port-forward <client_pod_name> 5001:5001` (this will expose clientapi to port 5001)
+To test the admin api, use `kubectl port-forward service/adminapi-service 5000:5000` (this will expose adminapi to port 5000). You may also expose the pod directly.
+To test the client api, use `kubectl port-forward <client_pod_name> 5001:443` (this will expose clientapi to port 5001)
 
 
 ### Troubleshooting
